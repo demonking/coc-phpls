@@ -24,21 +24,6 @@
         "configuration": {
             "title": "php configuration",
             "properties": {
-                "phpls.path": {
-                    "type": "string",
-                    "default": "",
-                    "description": "Path to intelephense module, you can use a custom version of intelephense by modifying this setting to include the full path."
-                },
-                "phpls.enable": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "is enable php lsp"
-                },
-                "phpls.trace.server": {
-                    "type": "string",
-                    "default": "",
-                    "description": "enable phpls server trace log?"
-                },
                 "intelephense.compatibility.correctForBaseClassStaticUnionTypes": {
                     "type": "boolean",
                     "default": true,
@@ -53,7 +38,7 @@
                 },
                 "intelephense.files.maxSize": {
                     "type": "number",
-                    "default": 5000000,
+                    "default": 1000000,
                     "description": "Maximum file size in bytes.",
                     "scope": "window"
                 },
@@ -230,6 +215,7 @@
                             "tidy",
                             "tokenizer",
                             "uopz",
+                            "uuid",
                             "uv",
                             "v8js",
                             "wddx",
@@ -363,7 +349,7 @@
                 "intelephense.format.enable": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Enables formatting",
+                    "description": "Enables formatting.",
                     "scope": "window"
                 },
                 "intelephense.format.braces": {
@@ -392,7 +378,7 @@
                     "items": {
                         "type": "string"
                     },
-                    "description": "The include paths (as individual path items) as defined in the include_path ini setting or paths to external libraries. Used for resolving script inclusion and/or adding external symbols to folder.",
+                    "description": "The include paths (as individual absolute path items) as defined in the include_path ini setting or paths to external libraries. Used for resolving script inclusion and/or adding external symbols to folder.",
                     "scope": "resource"
                 },
                 "intelephense.environment.phpVersion": {
@@ -541,11 +527,15 @@
                 },
                 "intelephense.licenceKey": {
                     "type": "string",
-                    "default": ""
+                    "description": "DEPRECATED. Don't use this. Go to command palette and search for enter licence key.",
+                    "scope": "application"
                 },
                 "intelephense.telemetry.enabled": {
-                    "type": "boolean",
-                    "description": "Anonymous usage and crash data will be sent to Azure Application Insights.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ],
+                    "description": "Anonymous usage and crash data will be sent to Azure Application Insights. Inherits from telemetry.enableTelemetry.",
                     "scope": "window",
                     "default": null
                 },
@@ -557,7 +547,7 @@
                     "default": [
                         "**/vendor/**"
                     ],
-                    "description": "Glob patterns to exclude files and folders from having symbols renamed. Rename operation will fail if references and/or definitions are found in excluded files/folders.",
+                    "description": "Glob patterns matching files and folders that should be excluded when renaming symbols. Rename operation will fail if the symbol definition is found in the excluded files/folders.",
                     "scope": "resource"
                 },
                 "intelephense.references.exclude": {
